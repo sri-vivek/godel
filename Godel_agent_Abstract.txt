@@ -1,0 +1,32 @@
+Abstract
+
+Open-endedness, the ability to generate novel, diverse, and increasingly complex behaviors, is a key challenge for adaptive agents. Recursive self-improvement (RSI) enables agents to analyze failures, synthesize corrective strategies, and iteratively refine their policies, but prior work relies on very large language models. We introduce Polaris, a framework for Policy Repair via Experience Abstraction, which transforms failure traces into validated policy updates through analysis, strategy synthesis, abstraction, and repair. Polaris accumulates reusable strategies, fostering novelty, diversity, and complexity growth, and makes RSI feasible for smaller language models such as Qwen2.5-7B. We evaluate Polaris on MGSM, DROP, and GPQA, covering arithmetic reasoning, compositional inference, and high-level problem solving. Across all benchmarks, Polaris delivers consistent performance gains, interpretable policy patches, and transferable abstractions, demonstrating that recursive self-improvement can be achieved effectively in compact models.
+
+
+Open-endedness, the capacity of a system to generate novel, diverse, and increasingly complex behaviors, is a central challenge for adaptive artificial agents. Open-ended systems convert failures into opportunities, abstract successful strategies into reusable forms, and progressively accumulate sophisticated capabilities. Achieving this requires mechanisms that move beyond static parameter adaptation and enable self-referential reasoning and policy-level modification.
+
+Recursive self-improvement (RSI) provides a concrete pathway to open-endedness. An RSI agent monitors its own failures, generates corrective strategies, and integrates validated modifications into its policy. Prior work, such as the Gödel Agent, demonstrates this paradigm but relies on very large models, for example GPT-3.5 and above, where abundant reasoning capacity masks whether RSI can be systematic, interpretable, and effective in smaller-scale models. This raises two limitations: first, accessibility of RSI research is limited for those without large-scale compute, and second, smaller models may struggle to sustain iterative improvement without producing brittle or repetitive updates.
+
+We address these challenges by adapting the Gödel Agent framework to operate with smaller language models (SLMs) and introduce Polaris, a framework for Policy Repair via Experience Abstraction. Polaris systematically transforms failure traces into validated policy updates through a structured pipeline:
+
+Failure Analysis – extract structured error signals from unsuccessful trajectories.
+
+Strategy Synthesis – generate candidate refinements, including reasoning heuristics, control-flow adjustments, or code modifications.
+
+Abstraction – generalize synthesized strategies into reusable templates applicable across tasks.
+
+Policy Repair – propose executable patches derived from abstractions and validate them in a sandbox before integration into the agent’s policy.
+
+By abstracting strategies from experience, Polaris ensures that local repairs contribute to a growing library of reusable strategies, fostering the hallmarks of open-endedness: novelty through new solution patterns, diversity with an expanding repertoire, and complexity growth by enabling compositional reuse in harder tasks.
+
+We evaluate Polaris on three challenging benchmarks: MGSM (multilingual grade-school math) for structured numerical reasoning, DROP (discrepancy-based reading comprehension) for compositional inference, and GPQA (graduate-level problem solving) for high-complexity reasoning. Across all three, the Polaris framework demonstrates systematic accuracy improvements, interpretable policy patches, and transferable abstractions, showing that recursive self-improvement is feasible even with compact SLMs such as Qwen2.5-7B.
+
+Contributions. This paper makes the following contributions:
+
+We introduce Polaris, a framework that transforms failures into validated policy updates through analysis, synthesis, abstraction, and repair.
+
+We demonstrate that recursive self-improvement is viable with smaller language models (SLMs), reducing dependency on very large LLMs.
+
+We show that Polaris operationalizes open-endedness, fostering novelty, diversity, and complexity growth through strategy abstraction.
+
+We empirically validate our approach on MGSM, DROP, and GPQA, demonstrating consistent performance gains and interpretable improvements in reasoning capabilities.
