@@ -1,0 +1,30 @@
+\subsection{\textsc{Polaris}: Policy Repair through Experience Abstraction}
+
+\textsc{Polaris} implements recursive self-improvement for small language models (SLMs) as a disciplined cycle of reflection, abstraction, and repair. The framework converts execution failures into validated code-level updates while maintaining full traceability in the agent's \textbf{Memory}. Each cycle follows the operators defined in \textbf{Algorithms~1 and~2} and the prompt templates shown in \textbf{Figures~1--4}. The agent executes a mutable policy $\pi_t$ on a validation set $\mathcal{D}$, records its behavior and outcomes, and integrates validated updates to yield a refined policy $\pi_{t+1}=\pi_t\oplus\Delta\pi$.
+
+\paragraph{Failure Analysis.} 
+Executing $\pi_t$ on $\mathcal{D}$ produces a set of failed instances 
+\[
+\mathcal{T}=\{\tau_i\},
+\]
+where each $\tau_i$ contains the input, the agent's reasoning trace, the predicted output, and the reference answer. For every $\tau_i$, the agent invokes \texttt{AnalyzeFailure} (Algorithm~1; Figure~1), a self-reflection operator that generates a structured record 
+\[
+A_i=(\text{diagnosis}_i,\ \text{revision}_i,\ \text{prevention}_i).
+\]
+The \textit{diagnosis} identifies the cause of error in the policy's reasoning or control flow, the \textit{revision plan} proposes targeted adjustments at the code or rule level, and the \textit{prevention rule} generalizes these insights for future iterations. Each reflection $A_i$ is appended to \textbf{Memory}, forming a repository of interpretable experience from which higher-level repair strategies are derived.
+
+\paragraph{Strategy Synthesis.}
+The \texttt{StrategySynthesis} operator (Algorithm~1; Figure~2) abstracts across reflections $A=\{A_i\}$ to produce a compact set of reusable directives
+\[
+\delta=\{\delta_j\}.
+\]
+Each $\delta_j$ captures a general repair principle such as decomposition, normalization, or control-flow adjustment that can resolve multiple failures. The prompt enforces novelty with respect to strategies stored in \textbf{Memory} and limits the agent to one or two well-formed strategies per cycle. By compressing instance-specific reflections into transferable repair abstractions, \textsc{Polaris} transforms episodic feedback into policy-level adaptation.
+
+\paragraph{Patch Generation.}
+For each synthesized strategy $\delta_j$, the \texttt{PatchGeneration} operator (Algorithm~1; Figure~3) instantiates a minimal code patch $p_j$. Each patch modifies only the lines required to implement $\delta_j$ and excludes any explanatory text. A lightweight validator checks syntax and formatting before a patch enters integration. The resulting patch set is denoted $\mathcal{P}=\{p_j\}$. Emphasizing locality and minimality ensures that every modification remains interpretable and that the agent's policy evolves through small, verifiable updates.
+
+\paragraph{Patch Integration.}
+Patch integration follows \textbf{Algorithm~2}. Each patch in $\mathcal{P}$ is applied through the \texttt{UpdatePolicy}$(\pi_t, s, p)$ procedure to generate a temporary policy candidate. Integration is verified through syntactic and execution checks rather than direct performance evaluation. If a patch fails, the agent retries up to a fixed bound (three times by default). Persistent failures result in the patch and its context being archived in \textbf{Memory} for potential later analysis. After integration, the updated policy $\pi_{t+1}$ proceeds to the next validation phase, where its performance effects are naturally observed. \textbf{Memory} retains all artifacts from the cycle, including reflections, strategies, patches, and integration results, providing continuity and preventing redundant proposals.
+
+\paragraph{Discussion.}
+Each operator in \textsc{Polaris} serves a well-defined role. Failure analysis grounds modification in self-reflection, strategy synthesis compresses experience into reusable knowledge, patch generation renders this knowledge executable, and integration enforces conservative, verifiable change. Together they realize a recursive process in which the agent incrementally restructures its own policy through introspection and abstraction. \textsc{Polaris} reinterprets the self-referential principle of the Gödel Agent as a tractable framework for SLMs, favoring transparent, localized policy repair over unconstrained self-rewrite and ensuring stability through bounded, auditable updates.
