@@ -1,0 +1,19 @@
+\subection{Gödel Agent: A Self-Referential Framework for Recursive Self-Improvement}
+
+Gödel Agent~\cite{yin2024g} introduces a self-referential framework that realizes recursive self-improvement in LLM-based agents. Building on the theoretical foundation of the Gödel Machine~\cite{schmidhuber2007godel}, the framework enables an agent not only to modify its task-execution policy $\pi$ but also to revise the meta-level improvement logic $I$ that determines how these modifications are generated and applied. In this way, Gödel Agent offers a practical instantiation of computational self-reflection and evolution in language-based reasoning systems.
+
+At its core, Gödel Agent structures self-improvement as a recursive optimization loop guided by introspection and empirical feedback. Given an environment $\mathcal{E}$ and a utility function $U(\mathcal{E}, \pi)$, the agent repeatedly executes, evaluates, and refines its own policy and improvement logic through four key procedures.:
+
+\begin{enumerate}
+    \item \textbf{Introspection (Self-Inspect):} The agent analyzes its internal architecture, including code modules, reasoning traces, and historical performance data. This process yields an explicit representation of the agent’s current capabilities and limitations.
+    \item \textbf{Execution (Interact):} During execution, the policy $\pi$ operates as an LLM-based reasoning and acting module that engages with the environment through natural language interactions, tool use, and task-specific actions. The agent records both its intermediate reasoning traces and environmental responses, which serve as empirical evidence for evaluating and refining its subsequent behavior.
+    \item \textbf{Self-Modification (Self-Improve):} Using the improvement logic $I$, the agent evaluates its performance and proposes candidate code edits or rewrites. These modifications may target the policy $\pi$ to enhance problem-solving behavior or the improvement logic $I$ itself to refine the way updates are reasoned about. Large language models serve as the generative engine for proposing, critiquing, and verifying such modifications.
+    \item \textbf{Recursive Continuation (Continue-Improve):} After each modification is integrated, the agent re-enters the introspection phase. This recursive loop allows both $\pi$ and $I$ to evolve jointly, producing progressively more abstract forms of self-repair and adaptation.
+\end{enumerate}
+
+A central technical innovation in Gödel Agent is its use of \textit{runtime code mutation}, implemented through mechanisms that enable modification of executable components during operation. This capability allows the agent to test, validate, and revert modifications dynamically without full retraining, supporting stable iterative improvement.
+
+Together, these procedures operationalize the core principles of recursive self-improvement. Through \textbf{self-reference}, the agent maintains explicit representations of its own structure and reasoning process, enabling it to analyze and modify its internal logic.  Through \textbf{self-modification}, both the task policy and the improvement logic are subject to revision via generated code updates that adjust behavior or meta-reasoning mechanisms. Finally, through \textbf{self-validation}, each proposed modification is empirically tested against prior performance, ensuring that only beneficial updates are retained and integrated into the evolving agent.
+
+
+Empirical studies show that Gödel Agent can perform multi-round reasoning and self-modification with large models such as GPT-3.5 and GPT-4, demonstrating stable recursive adaptation. However, the framework remains computationally intensive and sensitive to initialization, motivating extensions like \textsc{Polaris}, which aim to adapt these principles for smaller models through structured experience and policy repair.
