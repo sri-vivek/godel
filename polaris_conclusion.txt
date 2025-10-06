@@ -1,0 +1,13 @@
+\section{Conclusion}
+
+We presented \textsc{Polaris}, a framework that operationalizes recursive self-improvement for small language models through policy repair and experience abstraction. Unlike prior approaches such as the Gödel Agent, which assume large-model capacity and unconstrained self-rewrite, \textsc{Polaris} introduces a structured repair cycle that grounds self-improvement in interpretable, verifiable updates. By integrating self-reflection, strategy abstraction, patch generation, and conservative policy integration, the framework enables smaller agents to iteratively refine their behavior while preserving stability and traceability. 
+
+Empirical evaluation on reasoning and comprehension benchmarks demonstrates that \textsc{Polaris} improves task performance through successive refinement cycles without external supervision or retraining. More broadly, this work advances the feasibility of self-referential learning in resource-constrained agents, suggesting a path toward open-ended yet controlled self-improvement in future language model systems.
+
+
+
+\section{Limitations}
+
+\textsc{Polaris} provides a practical approach to recursive self-improvement in small language models, yet some limitations remain. The reduced reasoning capacity, smaller context windows, and limited tool-use capabilities of SLMs constrain the depth of self-reflection and the complexity of policy updates the agent can perform. Moreover, abstraction over larger and more diverse experience sets remains challenging for small language models, as limited context capacity constrains the agent’s ability to consolidate reflections into coherent, generalizable strategies. Finally, while the iterative repair cycle supports continual refinement, it does not guarantee monotonic improvement and may increase computational overhead when repair attempts are frequent. These considerations do not undermine the framework’s core contribution but highlight opportunities for extending \textsc{Polaris} toward more expressive, tool-augmented, and stable self-improvement processes.
+
+
