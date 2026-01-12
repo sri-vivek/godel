@@ -3,6 +3,12 @@
 \usepackage{tikz}
 \usetikzlibrary{calc}
 
+% --- Artistic, interpretive palette ---
+\definecolor{bgcolor}{RGB}{238,236,232}   % warm paper-like gray
+
+\definecolor{stylecolor}{RGB}{186,108,83}   % muted terracotta
+\definecolor{semanticcolor}{RGB}{108,123,158} % soft indigo
+\definecolor{affectivecolor}{RGB}{122,146,118} % sage green
 
 \begin{figure}[t]
     \centering
@@ -44,18 +50,32 @@
                 (0,\y) rectangle (\barwidth,\y+\barheight);
         }
 
-        % Foreground bars (normalized proximity scores)
-        \draw[rounded corners=3pt, fill=barcolor]
-            (0,2.6) rectangle (4.9,2.6+\barheight);
-        \draw[rounded corners=3pt, fill=barcolor]
+        % % Foreground bars (normalized proximity scores)
+        % \draw[rounded corners=3pt, fill=barcolor]
+        %     (0,2.6) rectangle (4.9,2.6+\barheight);
+        % \draw[rounded corners=3pt, fill=barcolor]
+        %     (0,1.6) rectangle (3.6,1.6+\barheight);
+        % \draw[rounded corners=3pt, fill=barcolor]
+        %     (0,0.6) rectangle (5.4,0.6+\barheight);
+
+        \draw[rounded corners=3pt, fill=stylecolor]
+    (0,2.6) rectangle (4.9,2.6+\barheight);
+
+        \draw[rounded corners=3pt, fill=semanticcolor]
             (0,1.6) rectangle (3.6,1.6+\barheight);
-        \draw[rounded corners=3pt, fill=barcolor]
+        
+        \draw[rounded corners=3pt, fill=affectivecolor]
             (0,0.6) rectangle (5.4,0.6+\barheight);
 
-        % Scores placed OUTSIDE the bars
-        \node[anchor=west, font=\small] at (5.1,2.83) {0.79};
-        \node[anchor=west, font=\small] at (3.8,1.83) {0.58};
-        \node[anchor=west, font=\small] at (5.6,0.83) {0.87};
+        % % Scores placed OUTSIDE the bars
+        % \node[anchor=west, font=\small] at (5.1,2.83) {0.79};
+        % \node[anchor=west, font=\small] at (3.8,1.83) {0.58};
+        % \node[anchor=west, font=\small] at (5.6,0.83) {0.87};
+
+        \node[anchor=west, font=\small\color{stylecolor!80!black}] at (5.1,2.83) {0.79};
+        \node[anchor=west, font=\small\color{semanticcolor!80!black}] at (3.8,1.83) {0.58};
+        \node[anchor=west, font=\small\color{affectivecolor!80!black}] at (5.6,0.83) {0.87};
+
 
     \end{tikzpicture}
 
