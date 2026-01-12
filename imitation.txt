@@ -1,0 +1,66 @@
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+
+\begin{figure}[t]
+    \centering
+
+    % --- Top row: Images ---
+    \begin{subfigure}[t]{0.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{imageA.png}
+        \caption{Image (A)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{imageB.png}
+        \caption{Image (B)}
+    \end{subfigure}
+
+    \vspace{1em}
+
+    % --- Bottom row: Artistic proximity bars ---
+    \begin{tikzpicture}[x=1cm,y=0.7cm]
+
+        % Parameters
+        \def\barwidth{6.2}
+        \def\barheight{0.45}
+
+        % Soft creative palette
+        \definecolor{barcolor}{RGB}{92,122,158}
+        \definecolor{bgcolor}{RGB}{230,233,237}
+
+        % Metric labels
+        \node[anchor=east] at (-0.3,2.6) {Visual Style};
+        \node[anchor=east] at (-0.3,1.6) {Semantic Intent};
+        \node[anchor=east] at (-0.3,0.6) {Affective Tone};
+
+        % Background bars
+        \foreach \y in {2.6,1.6,0.6} {
+            \draw[rounded corners=3pt, fill=bgcolor, draw=none]
+                (0,\y) rectangle (\barwidth,\y+\barheight);
+        }
+
+        % Foreground bars (normalized proximity scores)
+        \draw[rounded corners=3pt, fill=barcolor]
+            (0,2.6) rectangle (4.9,2.6+\barheight);
+        \draw[rounded corners=3pt, fill=barcolor]
+            (0,1.6) rectangle (3.6,1.6+\barheight);
+        \draw[rounded corners=3pt, fill=barcolor]
+            (0,0.6) rectangle (5.4,0.6+\barheight);
+
+        % Scores placed OUTSIDE the bars
+        \node[anchor=west, font=\small] at (5.1,2.83) {0.79};
+        \node[anchor=west, font=\small] at (3.8,1.83) {0.58};
+        \node[anchor=west, font=\small] at (5.6,0.83) {0.87};
+
+    \end{tikzpicture}
+
+    \caption{Qualitative comparison between images (A) and (B).
+    Proximity is visualized across three perceptual dimensions using soft, game-inspired strength bars.
+    Scores are normalized to $[0,1]$, with higher values indicating stronger alignment.}
+    \label{fig:creative_proximity}
+\end{figure}
