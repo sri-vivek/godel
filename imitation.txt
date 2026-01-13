@@ -3,84 +3,127 @@
 \usepackage{tikz}
 \usetikzlibrary{calc}
 
-% --- Artistic, interpretive palette ---
-\definecolor{bgcolor}{RGB}{238,236,232}   % warm paper-like gray
-
-\definecolor{stylecolor}{RGB}{186,108,83}   % muted terracotta
-\definecolor{semanticcolor}{RGB}{108,123,158} % soft indigo
-\definecolor{affectivecolor}{RGB}{122,146,118} % sage green
-
 \begin{figure}[t]
+\centering
+
+% =========================
+% Top row: Three images
+% =========================
+\begin{subfigure}[t]{0.3\linewidth}
     \centering
+    \includegraphics[width=\linewidth]{image1.png}
+    \caption{Image 1}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.3\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{image2.png}
+    \caption{Image 2}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.3\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{image3.png}
+    \caption{Image 3}
+\end{subfigure}
 
-    % --- Top row: Images ---
-    \begin{subfigure}[t]{0.45\linewidth}
-        \centering
-        \includegraphics[width=\linewidth]{imageA.png}
-        \caption{Image (A)}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.45\linewidth}
-        \centering
-        \includegraphics[width=\linewidth]{imageB.png}
-        \caption{Image (B)}
-    \end{subfigure}
+\vspace{1.2em}
 
-    \vspace{1em}
+% =========================
+% Bottom: Side-by-side comparisons
+% =========================
+\begin{tikzpicture}[x=1cm,y=0.7cm]
 
-    % --- Bottom row: Artistic proximity bars ---
-    \begin{tikzpicture}[x=1cm,y=0.7cm]
+% ---- Parameters ----
+\def\barwidth{3.0}     % width per comparison
+\def\barheight{0.45}
+\def\gap{1.0}          % INCREASED gap between comparisons
+\def\scoreoffset{0.12}
 
-        % Parameters
-        \def\barwidth{6.2}
-        \def\barheight{0.45}
+% ---- Scores ----
+% Image 1 vs Image 2 (LEFT)
+\def\VSone{0.89}
+\def\SIone{0.60}
+\def\ATone{0.64}
 
-        % Soft creative palette
-        \definecolor{barcolor}{RGB}{92,122,158}
-        \definecolor{bgcolor}{RGB}{230,233,237}
+% Image 1 vs Image 3 (RIGHT) -- UPDATED
+\def\VStwo{0.84}
+\def\SItwo{0.70}
+\def\ATtwo{0.39}
 
-        % Metric labels
-        \node[anchor=east] at (-0.3,2.6) {Visual Style};
-        \node[anchor=east] at (-0.3,1.6) {Semantic Intent};
-        \node[anchor=east] at (-0.3,0.6) {Affective Tone};
+% ---- Colors (arts & creativity) ----
+\definecolor{bgcolor}{RGB}{238,236,232}
+\definecolor{stylecolor}{RGB}{186,108,83}     % terracotta
+\definecolor{semanticcolor}{RGB}{108,123,158} % indigo
+\definecolor{affectivecolor}{RGB}{122,146,118}% sage
 
-        % Background bars
-        \foreach \y in {2.6,1.6,0.6} {
-            \draw[rounded corners=3pt, fill=bgcolor, draw=none]
-                (0,\y) rectangle (\barwidth,\y+\barheight);
-        }
+% ---- Column titles ----
+\node[font=\small] at (1.5,3.3) {Image 1 vs Image 2};
+\node[font=\small] at (1.5+\barwidth+\gap,3.3) {Image 1 vs Image 3};
 
-        % % Foreground bars (normalized proximity scores)
-        % \draw[rounded corners=3pt, fill=barcolor]
-        %     (0,2.6) rectangle (4.9,2.6+\barheight);
-        % \draw[rounded corners=3pt, fill=barcolor]
-        %     (0,1.6) rectangle (3.6,1.6+\barheight);
-        % \draw[rounded corners=3pt, fill=barcolor]
-        %     (0,0.6) rectangle (5.4,0.6+\barheight);
+% ---- Metric labels ----
+\node[anchor=east] at (-0.3,2.6) {Visual Style};
+\node[anchor=east] at (-0.3,1.6) {Semantic Intent};
+\node[anchor=east] at (-0.3,0.6) {Affective Tone};
 
-        \draw[rounded corners=3pt, fill=stylecolor]
-    (0,2.6) rectangle (4.9,2.6+\barheight);
+% =========================
+% Background bars
+% =========================
+\foreach \y in {2.6,1.6,0.6} {
+    % Left comparison
+    \draw[rounded corners=3pt, fill=bgcolor, draw=none]
+        (0,\y) rectangle (\barwidth,\y+\barheight);
 
-        \draw[rounded corners=3pt, fill=semanticcolor]
-            (0,1.6) rectangle (3.6,1.6+\barheight);
-        
-        \draw[rounded corners=3pt, fill=affectivecolor]
-            (0,0.6) rectangle (5.4,0.6+\barheight);
+    % Right comparison
+    \draw[rounded corners=3pt, fill=bgcolor, draw=none]
+        (\barwidth+\gap,\y) rectangle (2*\barwidth+\gap,\y+\barheight);
+}
 
-        % % Scores placed OUTSIDE the bars
-        % \node[anchor=west, font=\small] at (5.1,2.83) {0.79};
-        % \node[anchor=west, font=\small] at (3.8,1.83) {0.58};
-        % \node[anchor=west, font=\small] at (5.6,0.83) {0.87};
+% =========================
+% Image 1 vs Image 2 (LEFT)
+% =========================
+\draw[rounded corners=3pt, fill=stylecolor]
+    (0,2.6) rectangle ({\VSone*\barwidth},2.6+\barheight);
+\draw[rounded corners=3pt, fill=semanticcolor]
+    (0,1.6) rectangle ({\SIone*\barwidth},1.6+\barheight);
+\draw[rounded corners=3pt, fill=affectivecolor]
+    (0,0.6) rectangle ({\ATone*\barwidth},0.6+\barheight);
 
-        \node[anchor=west, font=\small\color{stylecolor!80!black}] at (5.1,2.83) {0.79};
-        \node[anchor=west, font=\small\color{semanticcolor!80!black}] at (3.8,1.83) {0.58};
-        \node[anchor=west, font=\small\color{affectivecolor!80!black}] at (5.6,0.83) {0.87};
+\node[anchor=west, font=\small\color{stylecolor!80!black}]
+    at ({\VSone*\barwidth+\scoreoffset},2.83) {0.89};
+\node[anchor=west, font=\small\color{semanticcolor!80!black}]
+    at ({\SIone*\barwidth+\scoreoffset},1.83) {0.60};
+\node[anchor=west, font=\small\color{affectivecolor!80!black}]
+    at ({\ATone*\barwidth+\scoreoffset},0.83) {0.64};
 
+% =========================
+% Image 1 vs Image 3 (RIGHT)
+% =========================
+\draw[rounded corners=3pt, fill=stylecolor]
+    (\barwidth+\gap,2.6)
+    rectangle ({\barwidth+\gap+\VStwo*\barwidth},2.6+\barheight);
 
-    \end{tikzpicture}
+\draw[rounded corners=3pt, fill=semanticcolor]
+    (\barwidth+\gap,1.6)
+    rectangle ({\barwidth+\gap+\SItwo*\barwidth},1.6+\barheight);
 
-    \caption{Qualitative comparison between images (A) and (B).
-    Proximity is visualized across three perceptual dimensions using soft, game-inspired strength bars.
-    Scores are normalized to $[0,1]$, with higher values indicating stronger alignment.}
-    \label{fig:creative_proximity}
+\draw[rounded corners=3pt, fill=affectivecolor]
+    (\barwidth+\gap,0.6)
+    rectangle ({\barwidth+\gap+\ATtwo*\barwidth},0.6+\barheight);
+
+\node[anchor=west, font=\small\color{stylecolor!80!black}]
+    at ({\barwidth+\gap+\VStwo*\barwidth+\scoreoffset},2.80) {0.84};
+\node[anchor=west, font=\small\color{semanticcolor!80!black}]
+    at ({\barwidth+\gap+\SItwo*\barwidth+\scoreoffset},1.83) {0.70};
+\node[anchor=west, font=\small\color{affectivecolor!80!black}]
+    at ({\barwidth+\gap+\ATtwo*\barwidth+\scoreoffset},0.83) {0.39};
+
+\end{tikzpicture}
+
+\caption{
+Side-by-side perceptual comparison using Image~1 as a reference.
+Each metric is shown for Image~1 vs Image~2 (left) and Image~1 vs Image~3 (right),
+with normalized scores visualized using dimension-specific, arts-oriented traces.
+}
+\label{fig:side_by_side_proximity}
 \end{figure}
